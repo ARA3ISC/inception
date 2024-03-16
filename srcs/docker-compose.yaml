@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  nginx:
+    build: ./srcs/requirements/nginx/
+    image: nginx
+    ports:
+      - 433:433
+    volumes:
+      - /home/maneddam/data/wordpress/:/var/www/html/ # -> for linux
+      # - /Users/ziz/Desktop:/var/www/html/ # for mac
+    networks:
+      - mynetwork
+    restart: always
+  # wordpress:
+  #   build: ./wordpress/
+  #   image: wordpress
+  #   ports:
+  #     - 9000
+  #   volumes:
+  #     - /home/maneddam/data/wordpress/:/var/www/html/
+  #   networks:
+  #     - mynetwork
+
+  #   restart: always
+
+networks:
+  mynetwork:
+    driver: bridge

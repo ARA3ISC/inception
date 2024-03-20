@@ -6,23 +6,40 @@ services:
     image: nginx
     ports:
       - 433:433
-    volumes:
-      - /home/maneddam/data/wordpress/:/var/www/html/ # -> for linux
-      # - /Users/ziz/Desktop:/var/www/html/ # for mac
+    # volumes:
+    #   - /home/maneddam/data/wordpress/:/var/www/html/ # -> for linux
     networks:
       - mynetwork
     restart: always
-  # wordpress:
-  #   build: ./wordpress/
-  #   image: wordpress
-  #   ports:
-  #     - 9000
-  #   volumes:
-  #     - /home/maneddam/data/wordpress/:/var/www/html/
-  #   networks:
-  #     - mynetwork
+    env_file:
+      - .env
 
-  #   restart: always
+  mariadb:
+    build: ./srcs/requirements/mariadb/
+    image: mariadb
+    # volumes:
+    #   - /home/maneddam/data/mariadb/:/var/lib/mysql
+    ports:
+      - 3306
+    networks:
+      - mynetwork
+    restart: always
+    env_file:
+      - .env
+
+  wordpress:
+    build: ./srcs/requirements/wordpress/
+    image: wordpress
+    ports:
+      - 9000
+    # volumes:
+    #   - /home/maneddam/data/wordpress/:/var/www/html/
+    networks:
+      - mynetwork
+    env_file:
+      - .env
+
+    restart: always
 
 networks:
   mynetwork:

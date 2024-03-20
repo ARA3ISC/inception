@@ -1,24 +1,17 @@
 FROM debian:bullseye
 
-RUN apt-get update && \
-	apt-get install -y \
-	php \
-	php-fpm \
-	php-mysql \
-	php-curl \
-	php-gd \
-	php-mbstring \
-	php-xml \
-	php-xmlrpc \
-	php-soap \
-	&& \
-	rm -rf /var/lib/apt/lists/*
+RUN apt update && \
+	export DEBIAN_FRONTEND=noninteractive \
+	apt install -y \
+	php8.1 \
+	php8.1-fpm \
+	php-mysql wget\
+	mariadb-client \
+	php-curl vim
 
-RUN mkdir -p /var/www/html && \
-    curl -o wordpress.tar.gz -SL https://wordpress.org/latest.tar.gz && \
-    tar -xzf wordpress.tar.gz -C /var/www/html --strip-components=1 && \
-    rm wordpress.tar.gz
+COPY ./tools/wp_script.sh /
 
-EXPOSE 9000
+CMD ["bash", "wp_script.sh"]
 
-CMD ["php-fpm", "--nodaemonize"]
+
+

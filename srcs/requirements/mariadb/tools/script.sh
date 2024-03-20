@@ -1,19 +1,13 @@
-#!/bin/sh
+#! /bin/bash
 
 service mariadb start
-
 sleep 2
 
-mariadb -e "CREATE DATABASE IF NOT EXISTS mynewdb;"
+mariadb -e "CREATE USER '$db_user'@'$hostname' IDENTIFIED BY '$db_password';"
+mariadb -e "CREATE DATABASE $db;"
+mariadb -e "GRANT ALL PRIVILEGES ON $db.* to '$db_user'@'$hostname' IDENTIFIED BY '$db_password';"
 
-mariadb -e "CREATE USER IF NOT EXISTS 'maneddam'@'localhost' IDENTIFIED BY 'arabi123';"
-mariadb -e "GRANT ALL PRIVILEGES ON 'mynewdb'.* TO 'maneddam'@'%' IDENTIFIED BY 'arabi123';"
 mariadb -e "FLUSH PRIVILEGES;"
 
-service mariadb stop
+mysqladmin -u root shutdown
 exec mysqld_safe
-
-
-
-
-

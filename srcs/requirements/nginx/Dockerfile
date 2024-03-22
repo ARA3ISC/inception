@@ -11,14 +11,15 @@ RUN	openssl req -x509 \
 	-sha256 -days 356 \
 	-newkey rsa:2048
 
-RUN mkdir /var/www/html/wp_website
-RUN chmod 755 /var/www/html/wp_website
-RUN chown -R www-data:www-data /var/www/html/wp_website
+RUN mkdir /var/www/html/mywebsite
+RUN chmod 755 /var/www/html/mywebsite
+RUN chown -R www-data:www-data /var/www/html/mywebsite
 
-COPY ./conf/wp.conf /etc/nginx/sites-available
+COPY ./conf/wp.conf /etc/nginx/conf.d/
 COPY ./tools/ngx_script.sh /
 RUN chmod +x ngx_script.sh
 
-EXPOSE 433
+EXPOSE 443
 
+# CMD ["nginx", "-g", "'daemon off;'"]
 CMD ["bash", "ngx_script.sh"]

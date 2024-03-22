@@ -4,9 +4,10 @@ services:
   mariadb:
     build: ./requirements/mariadb/
     image: mariadb
+    container_name: mariadb
     volumes:
-      - /Users/ziz/Desktop/data/mariadb/:/var/lib/mysql/
-      # - /home/maneddam/data/mariadb/:/var/lib/mysql
+      - database:/var/lib/mysql
+    #   # - /Users/ziz/Desktop/data/mariadb/:/var/lib/mysql/
     ports:
       - 3306
     env_file:
@@ -14,37 +15,55 @@ services:
     networks:
       - mynetwork
     restart: always
-  # wordpress:
-  #   build: ./requirements/wordpress/
-  #   image: wordpress
-  #   ports:
-  #     - 9000
-  #   volumes:
-  #     - /Users/ziz/Desktop/data/wordpress/:/var/www/html/mywebsite/
-  #     # - /home/maneddam/data/wordpress/:/var/www/html/
-  #   networks:
-  #     - mynetwork
-  #   env_file:
-  #     - .env
-  #   depends_on:
-  #     - mariadb
-  #   restart: always
 
-  # nginx:
-  #   build: ./requirements/nginx/
-  #   image: nginx
-  #   ports:
-  #     - 433:433
-  #   # volumes:
-  #   #   - /home/maneddam/data/wordpress/:/var/www/html/ # -> for linux
-  #   networks:
-  #     - mynetwork
-  #   restart: always
-  #   env_file:
-  #     - .env
-  #   depends_on:
-  #     - wordpress
+  wordpress:
+    build: ./requirements/wordpress/
+    image: wordpress
+    container_name: wordpress
+    ports:
+      - 9000
+    volumes:
+      - website:/var/www/html/mywebsite/
+      # - /Users/ziz/Desktop/data/wordpress/:/var/www/html/mywebsite/
+    networks:
+      - mynetwork
+    env_file:
+      - .env
+    depends_on:
+      - mariadb
+    restart: always
+
+  nginx:
+    build: ./requirements/nginx/
+    image: nginx
+    container_name: nginx
+    ports:
+      - 443:443
+    volumes:
+      - website:/var/www/html/mywebsite/
+    #   - /home/maneddam/data/wordpress/:/var/www/html/ # -> for linux
+    networks:
+      - mynetwork
+    restart: always
+    env_file:
+      - .env
+    depends_on:
+      - wordpress
 
 networks:
   mynetwork:
     driver: bridge
+
+volumes:
+  database:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/maneddam/data/mariadb/
+  website:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/maneddam/data/wordpress/

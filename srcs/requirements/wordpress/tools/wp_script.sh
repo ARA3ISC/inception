@@ -19,8 +19,6 @@ sed -i "s/^define( 'DB_USER', 'username_here' );/define( 'DB_USER', '$db_user');
 sed -i "s/^define( 'DB_PASSWORD', 'password_here' );/define( 'DB_PASSWORD', '$db_password');/" wp-config.php
 sed -i "s/^define( 'DB_HOST', 'localhost' )/define( 'DB_HOST', '$hostname');/" wp-config.php
 
-
-sed -i 's/listen = \/run\/php\/php7.4-fpm.sock/listen = 9000/g' /etc/php/7.4/fpm/pool.d/www.conf
 mkdir /run/php
 
 php-fpm7.4 -F

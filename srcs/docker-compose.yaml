@@ -1,45 +1,49 @@
 version: '3.8'
 
 services:
-  nginx:
-    build: ./srcs/requirements/nginx/
-    image: nginx
-    ports:
-      - 433:433
-    # volumes:
-    #   - /home/maneddam/data/wordpress/:/var/www/html/ # -> for linux
-    networks:
-      - mynetwork
-    restart: always
-    env_file:
-      - .env
-
   mariadb:
-    build: ./srcs/requirements/mariadb/
+    build: ./requirements/mariadb/
     image: mariadb
-    # volumes:
-    #   - /home/maneddam/data/mariadb/:/var/lib/mysql
+    volumes:
+      - /Users/ziz/Desktop/data/mariadb/:/var/lib/mysql/
+      # - /home/maneddam/data/mariadb/:/var/lib/mysql
     ports:
       - 3306
+    env_file:
+      - .env
     networks:
       - mynetwork
     restart: always
-    env_file:
-      - .env
+  # wordpress:
+  #   build: ./requirements/wordpress/
+  #   image: wordpress
+  #   ports:
+  #     - 9000
+  #   volumes:
+  #     - /Users/ziz/Desktop/data/wordpress/:/var/www/html/mywebsite/
+  #     # - /home/maneddam/data/wordpress/:/var/www/html/
+  #   networks:
+  #     - mynetwork
+  #   env_file:
+  #     - .env
+  #   depends_on:
+  #     - mariadb
+  #   restart: always
 
-  wordpress:
-    build: ./srcs/requirements/wordpress/
-    image: wordpress
-    ports:
-      - 9000
-    # volumes:
-    #   - /home/maneddam/data/wordpress/:/var/www/html/
-    networks:
-      - mynetwork
-    env_file:
-      - .env
-
-    restart: always
+  # nginx:
+  #   build: ./requirements/nginx/
+  #   image: nginx
+  #   ports:
+  #     - 433:433
+  #   # volumes:
+  #   #   - /home/maneddam/data/wordpress/:/var/www/html/ # -> for linux
+  #   networks:
+  #     - mynetwork
+  #   restart: always
+  #   env_file:
+  #     - .env
+  #   depends_on:
+  #     - wordpress
 
 networks:
   mynetwork:

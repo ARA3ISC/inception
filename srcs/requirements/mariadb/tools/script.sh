@@ -1,13 +1,20 @@
 #! /bin/bash
 
 service mariadb start
-sleep 2
+# sleep 2
 
-mariadb -e "CREATE USER '$db_user'@'$hostname' IDENTIFIED BY '$db_password';"
-mariadb -e "CREATE DATABASE $db;"
-mariadb -e "GRANT ALL PRIVILEGES ON $db.* to '$db_user'@'$hostname' IDENTIFIED BY '$db_password';"
+# echo "db_user hhhhhhhhhh : $hostdb_username"
+# echo "host name : $hostname"
+# echo "db : $db"
 
-mariadb -e "FLUSH PRIVILEGES;"
+# mariadb -e "CREATE USER '$db_user'@'$hostname' IDENTIFIED BY '$db_password';"
+# mariadb -e "CREATE DATABASE $db;"
+# mariadb -e "GRANT ALL PRIVILEGES ON $db.* to '$db_user'@'$hostname' IDENTIFIED BY '$db_password';"
 
-mysqladmin -u root shutdown
-exec mysqld_safe
+# mariadb -e "FLUSH PRIVILEGES;"
+
+
+# service mariadb stop
+# service mariadb start
+# exec mysqld_safe
+# bash

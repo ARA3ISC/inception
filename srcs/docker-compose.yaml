@@ -37,8 +37,10 @@ services:
     container_name: nginx
     ports:
       - 443:443
+      - 9999:8080
     volumes:
       - website:/var/www/html/mywebsite/
+      - ${PWD}/data/adminer:/var/www/html/adminer/
     networks:
       - mynetwork
     restart: always
@@ -64,6 +66,24 @@ services:
       - .env
     volumes:
       - website:/home/${ftp_user}/ftp/files
+
+  adminer:
+    build: ./requirements/bonus/adminer
+    image: adminer
+    container_name: adminer
+    ports:
+      - 80
+    networks:
+      - mynetwork
+    # restart: always
+    depends_on:
+      - wordpress
+    env_file:
+      - .env
+    volumes:
+      - ${PWD}/data/adminer:/var/www/html/adminer
+
+
 
 networks:
   mynetwork:

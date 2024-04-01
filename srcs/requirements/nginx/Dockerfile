@@ -12,11 +12,15 @@ RUN	openssl req -x509 \
 	-newkey rsa:2048
 
 RUN mkdir /var/www/html/mywebsite
+RUN mkdir /var/www/html/adminer
 RUN chmod 755 /var/www/html/mywebsite
+RUN chmod 755 /var/www/html/adminer
 RUN chown -R www-data:www-data /var/www/html/mywebsite
+RUN chown -R www-data:www-data /var/www/html/adminer
 
 # COPY ./conf/wp.conf /etc/nginx/conf.d/
 COPY ./conf/wp.conf /etc/nginx/sites-available/
+COPY ./conf/adminer.conf /etc/nginx/sites-available/
 COPY ./tools/ngx_script.sh /
 RUN chmod +x ngx_script.sh
 

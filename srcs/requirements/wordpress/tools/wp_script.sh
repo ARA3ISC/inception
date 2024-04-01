@@ -15,6 +15,7 @@ chown -R www-data:www-data /var/www/html/mywebsite/
 
 # installing wp-cli
 curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+sleep 2
 
 # using wp instead of wp-cli.phar
 chmod +x wp-cli.phar

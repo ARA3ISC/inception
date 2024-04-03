@@ -75,7 +75,7 @@ services:
       - 80
     networks:
       - mynetwork
-    # restart: always
+    restart: always
     depends_on:
       - wordpress
     env_file:
@@ -83,7 +83,21 @@ services:
     volumes:
       - ${PWD}/data/adminer:/var/www/html/adminer
 
-
+  custom:
+    build: ./requirements/bonus/custom
+    image: custom
+    container_name: custom
+    ports:
+      - 3131:3131
+    networks:
+      - mynetwork
+    restart: always
+    # depends_on:
+    #   - nginx
+    # env_file:
+    #   - .env
+    # volumes:
+    #   - custom:/var/www/html/custom
 
 networks:
   mynetwork:

@@ -11,12 +11,12 @@ RUN	openssl req -x509 \
 	-sha256 -days 356 \
 	-newkey rsa:2048
 
-RUN mkdir /var/www/html/mywebsite
-RUN mkdir /var/www/html/adminer
-RUN chmod 755 /var/www/html/mywebsite
-RUN chmod 755 /var/www/html/adminer
-RUN chown -R www-data:www-data /var/www/html/mywebsite
-RUN chown -R www-data:www-data /var/www/html/adminer
+RUN mkdir /var/www/html/mywebsite \
+	&& mkdir /var/www/html/adminer \
+	&& chmod 755 /var/www/html/mywebsite \
+	&& chmod 755 /var/www/html/adminer \
+	&& chown -R www-data:www-data /var/www/html/mywebsite \
+	&& chown -R www-data:www-data /var/www/html/adminer
 
 # COPY ./conf/wp.conf /etc/nginx/conf.d/
 COPY ./conf/wp.conf /etc/nginx/sites-available/
@@ -25,6 +25,8 @@ COPY ./tools/ngx_script.sh /
 RUN chmod +x ngx_script.sh
 
 EXPOSE 443
+EXPOSE 9999
+EXPOSE 3131
 
 # CMD ["nginx", "-g", "'daemon off;'"]
 CMD ["bash", "./ngx_script.sh"]

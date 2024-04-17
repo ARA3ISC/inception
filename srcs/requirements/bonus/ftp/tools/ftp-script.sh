@@ -24,7 +24,7 @@ echo "
 local_enable=YES
 allow_writeable_chroot=YES
 pasv_enable=YES
-local_root=/home/arabi/ftp
+local_root=/home/$ftp_user/ftp
 pasv_min_port=40000
 pasv_max_port=40005
 userlist_file=/etc/vsftpd.userlist" >> /etc/vsftpd.conf

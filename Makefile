@@ -14,7 +14,7 @@ clean: down
 	rm -rf ./srcs/data/mariadb/*
 	rm -rf ./srcs/data/wordpress/*
 	docker volume rm srcs_database src_website
-	docker network rm $(docker network ls -q) 2>/dev/null
+# docker network rm $(docker network ls -q) 2>/dev/null
 
 fclean: clean
 	docker system prune -af

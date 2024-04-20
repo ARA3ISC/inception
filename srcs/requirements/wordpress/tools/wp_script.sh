@@ -34,6 +34,23 @@ mkdir /run/php
 
 wp core install --url=https://$WP_DOMAIN --title="$WP_TITLE" --admin_user=$WP_ADMIN --admin_password=$WP_PASSWORD --admin_email=$WP_ADMIN_MAIL --allow-root
 
+wp config --allow-root set WP_REDIS_HOST redis --path="/var/www/html/mywebsite"
+wp config --allow-root set WP_REDIS_PORT 6379 --path="/var/www/html/mywebsite"
+
+# echo "define('WP_REDIS_HOST', 'redis');" >> wp-config.php
+# echo "define('WP_REDIS_PORT', '6379');" >> wp-config.php
+# echo "define('WP_CACHE', true);" >> wp-config.php
+# wp config --allow-root set WP_REDIS_DATABASE 0 --path="/var/www/html/mywebsite"
+
+
+wp plugin install redis-cache --activate --allow-root
+wp redis enable --allow-root
+
+# wp config --allow-root set WP_REDIS_HOST redis --path="/var/www/html/mywebsite"
+# wp config --allow-root set WP_REDIS_PORT 6379 --path="/var/www/html/mywebsite"
+# wp config --allow-root set WP_REDIS_DATABASE 0 --path="/var/www/html/mywebsite"
+# wp plugin install redis-cache --activate  --allow-root --path="/var/www/html/mywebsite"
+# wp redis enable --allow-root --force --path="/var/www/html/mywebsite"
 
 php-fpm7.4 -F
 

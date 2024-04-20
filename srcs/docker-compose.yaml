@@ -29,6 +29,7 @@ services:
       - .env
     depends_on:
       - mariadb
+      - redis
     restart: always
 
   nginx:
@@ -92,12 +93,20 @@ services:
     networks:
       - mynetwork
     restart: always
+
+  redis:
+    build: ./requirements/bonus/redis
+    image: redis
+    container_name: redis
+    ports:
+      - 6379
     # depends_on:
-    #   - nginx
-    # env_file:
-    #   - .env
-    # volumes:
-    #   - custom:/var/www/html/custom
+    #   - wordpress
+    volumes:
+      - website:/var/www/html/mywebsite
+    networks:
+      - mynetwork
+    restart: always
 
 networks:
   mynetwork:

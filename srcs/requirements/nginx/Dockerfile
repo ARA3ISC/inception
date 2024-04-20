@@ -3,13 +3,13 @@ FROM debian:bullseye
 RUN apt update
 RUN apt install -y nginx openssl vim
 RUN mkdir /etc/nginx/ssl
-RUN	openssl req -x509 \
-	-nodes \
-	-out /etc/nginx/ssl/inception.crt \
-	-keyout /etc/nginx/ssl/inception.key \
-	-subj "/CN=maneddam.42.fr/C=MA/L=Marrakech" \
-	-sha256 -days 356 \
-	-newkey rsa:2048
+# RUN	openssl req -x509 \
+# 	-nodes \
+# 	-out /etc/nginx/ssl/inception.crt \
+# 	-keyout /etc/nginx/ssl/inception.key \
+# 	-subj "/CN=maneddam.42.fr/C=MA/L=Marrakech" \
+# 	-sha256 -days 356 \
+# 	-newkey rsa:2048
 
 RUN mkdir /var/www/html/mywebsite \
 	&& mkdir /var/www/html/adminer \

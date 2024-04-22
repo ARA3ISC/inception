@@ -8,7 +8,9 @@ COPY ./conf/www.conf /etc/php/7.4/fpm/pool.d/
 RUN chmod +x /wp_script.sh
 EXPOSE 443
 
-CMD ["bash", "wp_script.sh"]
+RUN #./wp_script.sh
 
+CMD ["bash", "wp_script.sh"]
+#CMD ["php-fpm7.4 -F"]
 
 

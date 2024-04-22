@@ -20,3 +20,4 @@ clean: down
 
 fclean:
 	docker system prune -af
+

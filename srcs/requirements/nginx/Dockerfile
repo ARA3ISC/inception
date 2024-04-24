@@ -1,10 +1,8 @@
 FROM debian:bullseye
 
-RUN apt update
-RUN apt install -y nginx openssl vim
-RUN mkdir /etc/nginx/ssl
+RUN apt update && apt install -y nginx openssl
 
-RUN mkdir /var/www/html/mywebsite \
+RUN mkdir /etc/nginx/ssl && mkdir /var/www/html/mywebsite \
 	&& mkdir /var/www/html/adminer \
 	&& chmod 755 /var/www/html/mywebsite \
 	&& chmod 755 /var/www/html/adminer \

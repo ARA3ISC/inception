@@ -32,6 +32,7 @@ services:
       - redis
     restart: always
 
+
   nginx:
     build: ./requirements/nginx/
     image: nginx
@@ -41,7 +42,7 @@ services:
       - 9999:8080
     volumes:
       - website:/var/www/html/mywebsite/
-      - ${PWD}/data/adminer:/var/www/html/adminer/
+      - /home/maneddam/data/adminer:/var/www/html/adminer/
     networks:
       - mynetwork
     restart: always
@@ -50,14 +51,15 @@ services:
     depends_on:
       - wordpress
 
+
   ftp:
     build: ./requirements/bonus/ftp
     image: ftp
     container_name: ftp
     ports:
-      - 20:20
-      - 21:21
-      - 40000-40005:40000-40005
+      - "20:20"
+      - "21:21"
+      - "40000-40005:40000-40005"
     networks:
       - mynetwork
     restart: always
@@ -82,7 +84,7 @@ services:
     env_file:
       - .env
     volumes:
-      - ${PWD}/data/adminer:/var/www/html/adminer
+      - /home/maneddam/data/adminer:/var/www/html/adminer
 
   custom:
     build: ./requirements/bonus/custom
@@ -100,8 +102,6 @@ services:
     container_name: redis
     ports:
       - 6379
-    # depends_on:
-    #   - wordpress
     volumes:
       - website:/var/www/html/mywebsite
     networks:
@@ -118,12 +118,10 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      # device: /home/maneddam/data/mariadb/ # for linux vm
-      device: ${PWD}/data/mariadb # for mac
+      device: /home/maneddam/data/mariadb/
   website:
     driver: local
     driver_opts:
       type: none
       o: bind
-      # device: /home/maneddam/data/wordpress/ # for linux vm
-      device: ${PWD}/data/wordpress # for mac
+      device: /home/maneddam/data/wordpress/
